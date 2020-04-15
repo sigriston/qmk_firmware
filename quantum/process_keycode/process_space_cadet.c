@@ -70,8 +70,14 @@
 #ifndef LAPO_KEYS
 #    define LAPO_KEYS KC_LALT, KC_LSFT, KC_9
 #endif
+#ifndef LAPO_KEYS_SWAP
+#    define LAPO_KEYS_SWAP KC_LGUI, KC_LSFT, KC_9
+#endif
 #ifndef RAPC_KEYS
 #    define RAPC_KEYS KC_RALT, KC_RSFT, KC_0
+#endif
+#ifndef RAPC_KEYS_SWAP
+#    define RAPC_KEYS_SWAP KC_RGUI, KC_RSFT, KC_0
 #endif
 
 // Shift / Enter setup
@@ -142,11 +148,19 @@ bool process_space_cadet(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
         case KC_LAPO: {
-            perform_space_cadet(record, LAPO_KEYS);
+            if (keymap_config.swap_lalt_lgui) {
+                perform_space_cadet(record, LAPO_KEYS_SWAP);
+            } else {
+                perform_space_cadet(record, LAPO_KEYS);
+            }
             return false;
         }
         case KC_RAPC: {
-            perform_space_cadet(record, RAPC_KEYS);
+            if (keymap_config.swap_ralt_rgui) {
+                perform_space_cadet(record, RAPC_KEYS_SWAP);
+            } else {
+                perform_space_cadet(record, RAPC_KEYS);
+            }
             return false;
         }
         case KC_SFTENT: {
